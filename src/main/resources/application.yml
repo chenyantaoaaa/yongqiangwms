@@ -1,0 +1,7 @@
+spring:
+    datasource:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://112.74.160.172:3306/learn?useUnicode=true&characterEncoding=UTF-8
+      username: root
+      password: a86358201
