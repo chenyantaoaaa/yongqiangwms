@@ -15,7 +15,7 @@ import java.util.List;
  * Created by yantao.chen on 2019-05-21
  */
 @RestController
-@RequestMapping("permission")
+@RequestMapping("api/permission")
 public class PermissionController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class PermissionController {
      * @return
      */
     @RequestMapping(value = "/getPermissionTree", method = {RequestMethod.POST})
-    public ResponseJson getPermissionTree() {
+    public ResponseJson getPermissionTree(  ) {
         //查询所有有效权限
         List<Permission> permissionList = permissionService.getAllPermission();
         //将所有有效权限转成权限树
