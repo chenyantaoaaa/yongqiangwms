@@ -1,6 +1,7 @@
 package com.yongqiang.wms.controller;
 
 import com.yongqiang.wms.mapper.UserMapper;
+import com.yongqiang.wms.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,7 +13,7 @@ import java.util.List;
  * Created by yantao.chen on 2019-05-20
  */
 @RestController
-@RequestMapping("wmsin")
+@RequestMapping("api/wmsin")
 public class WmsInController {
     @Autowired
     private UserMapper userMapper;

@@ -9,6 +9,8 @@ server:
   port: 8081
 # mybatis-plus 配置
 mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapper/*.xml
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: smart.industry.train.biz.entity
