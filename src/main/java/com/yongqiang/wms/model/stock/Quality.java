@@ -7,9 +7,9 @@ import java.util.Date;
 
 @Data
 public class Quality {
-    private Byte id;
+    private Long id;
 
-    private Byte wmsInId;
+    private Long wmsInId;
 
     private Integer portraitPower;
 
@@ -31,11 +31,11 @@ public class Quality {
 
     private String remark;
 
-    private Byte creator;
+    private Long creator;
 
     private Date createTime;
 
-    private Byte modifier;
+    private Long modifier;
 
     private Date modifyTime;
 }

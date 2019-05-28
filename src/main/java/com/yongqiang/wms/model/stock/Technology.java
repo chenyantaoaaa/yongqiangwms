@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class Technology {
-    private Integer id;
+    private Long id;
 
     private String name;
 
@@ -52,11 +52,11 @@ public class Technology {
 
     private Integer valid;
 
-    private Byte creator;
+    private Long creator;
 
     private Date createTime;
 
-    private Byte modifier;
+    private Long modifier;
 
     private Date modifyTime;
 }

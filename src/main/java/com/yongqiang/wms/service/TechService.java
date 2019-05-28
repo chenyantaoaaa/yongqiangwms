@@ -33,7 +33,7 @@ public class TechService {
      * 根据主键id查询工艺信息
      * @return
      */
-    public Technology getTechInfoById(Integer techId){
+    public Technology getTechInfoById(Long techId){
         return technologyMapper.selectById(techId);
     }
 

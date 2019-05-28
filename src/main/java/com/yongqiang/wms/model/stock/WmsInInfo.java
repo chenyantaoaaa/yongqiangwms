@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class WmsInInfo {
-    private Byte id;
+    private Long id;
 
     private String clientName;
 
@@ -22,11 +22,11 @@ public class WmsInInfo {
 
     private String remark;
 
-    private Byte creator;
+    private Long creator;
 
     private Date createTime;
 
-    private Byte modifier;
+    private Long modifier;
 
     private Date modifyTime;
 }

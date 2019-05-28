@@ -7,9 +7,9 @@ import java.util.Date;
 
 @Data
 public class WmsInDetail {
-    private Byte id;
+    private Long id;
 
-    private Byte mainId;
+    private Long mainId;
 
     private Integer coilLength;
 
@@ -23,11 +23,11 @@ public class WmsInDetail {
 
     private Date productTime;
 
-    private Byte creator;
+    private Long creator;
 
     private Date createTime;
 
-    private Byte modifier;
+    private Long modifier;
 
     private Date modifyTime;
 }
