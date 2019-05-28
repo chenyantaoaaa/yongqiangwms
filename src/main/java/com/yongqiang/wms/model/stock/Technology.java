@@ -8,6 +8,8 @@ import java.util.Date;
 public class Technology {
     private Integer id;
 
+    private String name;
+
     private Integer upperWindTem;
 
     private Integer lowerWindTem;
