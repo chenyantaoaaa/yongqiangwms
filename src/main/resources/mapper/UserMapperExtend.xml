@@ -9,7 +9,7 @@
     u.login_password,
     u.name,
     u.fixedUser
-    from rbac_user u
+    from user u
     where 1=1
     and u.login_name=#{loginName}
     and u.login_password=#{loginPassword}

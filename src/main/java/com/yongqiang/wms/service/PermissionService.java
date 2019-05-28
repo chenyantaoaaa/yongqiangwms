@@ -25,13 +25,10 @@ public class PermissionService{
 		return permissionMapper.getAllPermission();
 	}
 
-//	@Override
 //	public List<Permission> findPermissionsOfUser(Long userId) {
 //		return permissionMapper.findPermissionsOfUser(userId);
 //	}
-//
-//
-//
+
 //	@Override
 //	public List<Permission> findPermissionsOfRole(Long roleId) {
 //		return permissionMapper.findPermissionsOfRole(roleId);

@@ -17,4 +17,13 @@
         WHERE p.delete_flag = 0
         order by seq
     </select>
+
+    <!--<select id="findPermissionsOfUser" resultType="com.zhaogang.ii.saas.cloudstore.rbac.sdk.model.Permission" parameterType="long">-->
+        <!--SELECT-->
+        <!--<include refid="permission_column"/>-->
+        <!--FROM rbac_permission p-->
+        <!--JOIN rbac_role_permission rp on p.id=rp.permission_id-->
+        <!--JOIN rbac_user_role ur on rp.role_id =ur.role_id-->
+        <!--WHERE ur.user_id = #{userId}-->
+    <!--</select>-->
 </mapper>
