@@ -30,4 +30,6 @@ public class WmsInDetail {
     private Long modifier;
 
     private Date modifyTime;
+
+
 }

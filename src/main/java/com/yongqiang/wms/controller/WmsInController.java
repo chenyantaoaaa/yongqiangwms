@@ -60,4 +60,15 @@ public class WmsInController {
     public ReturnJson addInfo(WmsInInfoDto createDto){
         return new ReturnJson(wmsInService.addInfo(createDto));
     }
+
+    /**
+     * 更新入库单
+     * @param createDto 创建的Dto
+     * @return
+     */
+    @RequestMapping(value = "/updateWmsInfo" , method = {RequestMethod.POST})
+    @ResponseBody
+    public ReturnJson updateInfo(WmsInInfoDto createDto){
+        return new ReturnJson(wmsInService.updateInfo(createDto));
+    }
 }
