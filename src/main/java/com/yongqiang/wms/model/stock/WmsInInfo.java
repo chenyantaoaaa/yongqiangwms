@@ -1,5 +1,7 @@
 package com.yongqiang.wms.model.stock;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.util.Date;
@@ -7,6 +9,10 @@ import java.util.List;
 
 @Data
 public class WmsInInfo {
+    /**
+     * 设置主键自增
+     */
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     private String whsInCode;

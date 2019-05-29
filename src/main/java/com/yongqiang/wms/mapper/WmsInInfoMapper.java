@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public interface WmsInInfoMapper extends BaseMapper<WmsInInfo> {
 
-    IPage<WmsInInfo> selectInfoPage(Page page, @Param("record")WmsInInfoDto query);
+    IPage<WmsInInfo> selectInfoByPage(Page page, @Param("record")WmsInInfoDto query);
 
 
 }
