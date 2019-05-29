@@ -3,5 +3,9 @@
 <mapper namespace="com.yongqiang.wms.mapper.QualityMapper">
     <select id="selectQualityByPage"  resultType="com.yongqiang.wms.model.stock.Quality">
       select * from quality
+      where 1=1
+        <if test="record.wmsInCode != null and record.wmsInCode !=''">
+            and wms_in_code like concat('%',#{record.wmsInCode} ,'%')
+        </if>
   	</select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.yongqiang.wms.controller;
 
+import com.yongqiang.wms.model.base.RequestJson;
 import com.yongqiang.wms.model.base.ReturnJson;
 import com.yongqiang.wms.model.stock.Quality;
 import com.yongqiang.wms.model.stock.QualityDto;
@@ -19,7 +20,6 @@ public class QualityController {
     @Autowired
     private QualityService qualityService;
 
-
     /**
      * 分页查询质量信息
      * @param qualityDto
@@ -27,8 +27,8 @@ public class QualityController {
      */
     @RequestMapping("getQualitiesByPage")
     @ResponseBody
-    public ReturnJson getQualitiesByPage(@RequestBody QualityDto qualityDto){
-        return new ReturnJson(qualityService.getQualitiesByPage(qualityDto));
+    public ReturnJson getQualitiesByPage(@RequestBody RequestJson<QualityDto> qualityDto){
+        return new ReturnJson(qualityService.getQualitiesByPage(qualityDto.getData()));
     }
 
     /**
@@ -45,8 +45,8 @@ public class QualityController {
      */
     @RequestMapping("addQualityInfo")
     @ResponseBody
-    public ReturnJson addQualityInfo(@RequestBody Quality quality){
-        return new ReturnJson(qualityService.addQualityInfo(quality));
+    public ReturnJson addQualityInfo(@RequestBody RequestJson<Quality> quality){
+        return new ReturnJson(qualityService.addQualityInfo(quality.getData()));
     }
 
     /**
@@ -54,8 +54,8 @@ public class QualityController {
      */
     @RequestMapping("updateQualityInfo")
     @ResponseBody
-    public ReturnJson updateQualityInfo(@RequestBody Quality quality){
-        return new ReturnJson(qualityService.updateQualityInfo(quality));
+    public ReturnJson updateQualityInfo(@RequestBody RequestJson<Quality> quality){
+        return new ReturnJson(qualityService.updateQualityInfo(quality.getData()));
     }
 
 
@@ -64,7 +64,7 @@ public class QualityController {
      */
     @RequestMapping("deleteQualityInfo")
     @ResponseBody
-    public ReturnJson deleteQualityInfo(@RequestBody Quality quality){
-        return new ReturnJson(qualityService.deleteQualityInfo(quality));
+    public ReturnJson deleteQualityInfo(@RequestBody RequestJson<Quality> quality){
+        return new ReturnJson(qualityService.deleteQualityInfo(quality.getData()));
     }
 }
