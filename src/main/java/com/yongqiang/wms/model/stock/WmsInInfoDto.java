@@ -26,12 +26,10 @@ public class WmsInInfoDto extends WmsInInfo {
      */
     private List<WmsInDetail> details;
 
-    @Override
     public List<WmsInDetail> getDetails() {
         return details;
     }
 
-    @Override
     public void setDetails(List<WmsInDetail> details) {
         this.details = details;
     }
