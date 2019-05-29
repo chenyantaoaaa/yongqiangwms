@@ -35,8 +35,4 @@ public class WmsInInfo {
 
     private Date modifyTime;
 
-    /**
-     * 明细级数据
-     */
-    private List<WmsInDetail> details;
 }

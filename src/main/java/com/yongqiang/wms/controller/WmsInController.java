@@ -10,14 +10,13 @@ import com.yongqiang.wms.model.stock.WmsInInfoDto;
 import com.yongqiang.wms.model.user.User;
 import com.yongqiang.wms.service.WmsInService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
+ * 尝试使用RESTFUL 风格的接口
+ *
  * Created by yantao.chen on 2019-05-20
  */
 @RestController
@@ -41,13 +40,24 @@ public class WmsInController {
     }
 
     /**
-     *
+     * 尝试使用RESTFUL 风格的接口
      * @param mainId 通过主单ID查询detailList
      * @return
      */
-    @RequestMapping("/detailList/mainId/{id}")
+    @RequestMapping(value = "/detailList/mainId/{id}" , method = {RequestMethod.GET})
     @ResponseBody
     public ReturnJson getDetailInfoByMainId(@PathVariable("id") Long mainId){
-        return new ReturnJson(wmsInService.selectInfoByMainId(mainId));
+        return new ReturnJson(wmsInService.selectDetailInfoByMainId(mainId));
+    }
+
+    /**
+     * 创建入库单
+     * @param createDto 创建的Dto
+     * @return
+     */
+    @RequestMapping(value = "/createWmsInfo" , method = {RequestMethod.POST})
+    @ResponseBody
+    public ReturnJson addInfo(WmsInInfoDto createDto){
+        return new ReturnJson(wmsInService.addInfo(createDto));
     }
 }
