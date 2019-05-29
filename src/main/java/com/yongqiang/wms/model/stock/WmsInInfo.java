@@ -3,12 +3,17 @@ package com.yongqiang.wms.model.stock;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class WmsInInfo {
     private Long id;
 
+    private String whsInCode;
+
     private String clientName;
+
+    private Long techId;
 
     private String brand;
 
@@ -29,4 +34,9 @@ public class WmsInInfo {
     private Long modifier;
 
     private Date modifyTime;
+
+    /**
+     * 明细级数据
+     */
+    private List<WmsInDetail> details;
 }
