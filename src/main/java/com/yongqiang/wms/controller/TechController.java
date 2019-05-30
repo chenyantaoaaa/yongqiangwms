@@ -1,5 +1,6 @@
 package com.yongqiang.wms.controller;
 
+import com.yongqiang.wms.model.base.RequestJson;
 import com.yongqiang.wms.model.base.ReturnJson;
 import com.yongqiang.wms.model.stock.TechDto;
 import com.yongqiang.wms.model.stock.Technology;
@@ -26,8 +27,8 @@ public class TechController {
      */
     @RequestMapping("getTechsByPage")
     @ResponseBody
-    public ReturnJson getTechsByPage(@RequestBody TechDto techDto){
-        return new ReturnJson(techService.getTechsByPage(techDto));
+    public ReturnJson getTechsByPage(@RequestBody RequestJson<TechDto> techDto){
+        return new ReturnJson(techService.getTechsByPage(techDto.getData()));
     }
 
     /**
@@ -35,8 +36,8 @@ public class TechController {
      */
     @RequestMapping("getTechInfoById")
     @ResponseBody
-    public ReturnJson getTechInfoById(@RequestBody Technology technology){
-        return new ReturnJson(techService.getTechInfoById(technology.getId()));
+    public ReturnJson getTechInfoById(@RequestBody RequestJson<Technology> technology){
+        return new ReturnJson(techService.getTechInfoById(technology.getData().getId()));
     }
 
     /**
@@ -44,8 +45,8 @@ public class TechController {
      */
     @RequestMapping("addTechInfo")
     @ResponseBody
-    public ReturnJson addTechInfo(@RequestBody Technology technology){
-        return new ReturnJson(techService.addTechInfo(technology));
+    public ReturnJson addTechInfo(@RequestBody RequestJson<Technology> technology){
+        return new ReturnJson(techService.addTechInfo(technology.getData()));
     }
 
     /**
@@ -53,8 +54,8 @@ public class TechController {
      */
     @RequestMapping("updateTechInfo")
     @ResponseBody
-    public ReturnJson updateTechInfo(@RequestBody Technology technology){
-        return new ReturnJson(techService.updateTechInfo(technology));
+    public ReturnJson updateTechInfo(@RequestBody RequestJson<Technology> technology){
+        return new ReturnJson(techService.updateTechInfo(technology.getData()));
     }
 
 
@@ -63,7 +64,7 @@ public class TechController {
      */
     @RequestMapping("deleteTechInfo")
     @ResponseBody
-    public ReturnJson deleteTechInfo(@RequestBody Technology technology){
-        return new ReturnJson(techService.deleteTechInfo(technology));
+    public ReturnJson deleteTechInfo(@RequestBody RequestJson<Technology> technology){
+        return new ReturnJson(techService.deleteTechInfo(technology.getData()));
     }
 }

@@ -54,7 +54,7 @@ public class TechService {
      * @return
      */
     public int updateTechInfo(Technology technology){
-        List<Technology> techList = technologyMapper.selectList(new QueryWrapper<Technology>().eq("name", technology.getName()));
+        List<Technology> techList = technologyMapper.selectList(new QueryWrapper<Technology>().eq("name", technology.getName()).ne("id",technology.getId()));
         if(CollectionUtils.isNotEmpty(techList)){
             throw new BizException("工艺名不能重复");
         }
