@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yongqiang.wms.mapper.UserMapper;
 import com.yongqiang.wms.mapper.WmsInInfoMapper;
+import com.yongqiang.wms.model.base.RequestJson;
 import com.yongqiang.wms.model.base.ReturnJson;
+import com.yongqiang.wms.model.stock.WmsInDetail;
 import com.yongqiang.wms.model.stock.WmsInInfo;
 import com.yongqiang.wms.model.stock.WmsInInfoDto;
 import com.yongqiang.wms.model.user.User;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 尝试使用RESTFUL 风格的接口
+ *
  *
  * Created by yantao.chen on 2019-05-20
  */
@@ -35,19 +37,30 @@ public class WmsInController {
 
     @RequestMapping("/viewPageList")
     @ResponseBody
-    public ReturnJson searchList(WmsInInfoDto query){
-        return new ReturnJson(wmsInService.selectInfoByPage(query));
+    public ReturnJson searchList(@RequestBody RequestJson<WmsInInfoDto> query){
+        return new ReturnJson(wmsInService.selectInfoByPage(query.getData()));
     }
 
     /**
-     * 尝试使用RESTFUL 风格的接口
-     * @param mainId 通过主单ID查询detailList
+     *
+     * @param query 通过主单ID查询detailList
      * @return
      */
-    @RequestMapping(value = "/detailList/mainId/{id}" , method = {RequestMethod.GET})
+    @RequestMapping(value = "/getDetailListByMainId" , method = {RequestMethod.POST})
     @ResponseBody
-    public ReturnJson getDetailInfoByMainId(@PathVariable("id") Long mainId){
-        return new ReturnJson(wmsInService.selectDetailInfoByMainId(mainId));
+    public ReturnJson getDetailInfoByMainId(@RequestBody RequestJson<WmsInDetail> query){
+        return new ReturnJson(wmsInService.selectDetailInfoByMainId(query.getData().getMainId()));
+    }
+
+    /**
+     *
+     * @param query 通过主单ID查询detailList
+     * @return
+     */
+    @RequestMapping(value = "/getInfoById" , method = {RequestMethod.POST})
+    @ResponseBody
+    public ReturnJson getInfoByMId(@RequestBody RequestJson<WmsInInfo> query){
+        return new ReturnJson(wmsInService.getInfoById(query.getData().getId()));
     }
 
     /**
@@ -57,8 +70,8 @@ public class WmsInController {
      */
     @RequestMapping(value = "/createWmsInfo" , method = {RequestMethod.POST})
     @ResponseBody
-    public ReturnJson addInfo(WmsInInfoDto createDto){
-        return new ReturnJson(wmsInService.addInfo(createDto));
+    public ReturnJson addInfo(@RequestBody RequestJson<WmsInInfoDto> createDto){
+        return new ReturnJson(wmsInService.addInfo(createDto.getData()));
     }
 
     /**
@@ -68,7 +81,7 @@ public class WmsInController {
      */
     @RequestMapping(value = "/updateWmsInfo" , method = {RequestMethod.POST})
     @ResponseBody
-    public ReturnJson updateInfo(WmsInInfoDto createDto){
-        return new ReturnJson(wmsInService.updateInfo(createDto));
+    public ReturnJson updateInfo(@RequestBody RequestJson<WmsInInfoDto> createDto){
+        return new ReturnJson(wmsInService.updateInfo(createDto.getData()));
     }
 }

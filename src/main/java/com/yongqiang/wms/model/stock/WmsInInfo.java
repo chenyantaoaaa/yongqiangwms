@@ -1,7 +1,9 @@
 package com.yongqiang.wms.model.stock;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -37,8 +39,14 @@ public class WmsInInfo {
 
     private Date createTime;
 
+    @TableField(exist = false)
+    private String creatorName;
+
     private Long modifier;
 
     private Date modifyTime;
+
+    @TableField(exist = false)
+    private String modifierName;
 
 }
