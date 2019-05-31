@@ -8,6 +8,8 @@ import com.yongqiang.wms.model.stock.WmsInInfoDto;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Created by yantao.chen on 2019-05-20
  */
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Component;
 public interface WmsInInfoMapper extends BaseMapper<WmsInInfo> {
 
     IPage<WmsInInfo> selectInfoByPage(Page page, @Param("record")WmsInInfoDto query);
+    WmsInInfo getLastRecordByDate(@Param("record")WmsInInfoDto query);
 
 
 }

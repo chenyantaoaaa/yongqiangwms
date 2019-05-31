@@ -2,6 +2,9 @@ package com.yongqiang.wms.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.yongqiang.wms.common.utils.BeanUtils;
+import com.yongqiang.wms.common.utils.CodeProductUtil;
 import com.yongqiang.wms.mapper.WmsInDetailMapper;
 import com.yongqiang.wms.mapper.WmsInInfoMapper;
 import com.yongqiang.wms.model.stock.WmsInDetail;
@@ -26,6 +29,8 @@ public class WmsInService {
     private WmsInInfoMapper wmsInInfoMapper;
     @Autowired
     private WmsInDetailMapper wmsInDetailMapper;
+    @Autowired
+    private CodeProductUtil codeProductUtil;
 
     public IPage<WmsInInfo> selectInfoByPage(WmsInInfoDto query) {
         return wmsInInfoMapper.selectInfoByPage(query.getPage(),query);
@@ -39,18 +44,26 @@ public class WmsInService {
         return wmsInDetailMapper.selectList(wrapper);
     }
 
+    public WmsInInfo getInfoById(Long id){
+        //TODO 填充创建人及修改人信息
+        return wmsInInfoMapper.selectById(id);
+    }
+
     /**
      * 添加入库单信息信息
      * @param createDto
      * @return
      */
     @Transactional
-    public WmsInInfo addInfo(WmsInInfoDto createDto) {
+    public WmsInInfoDto addInfo(WmsInInfoDto createDto) {
         List<WmsInDetail> details =  createDto.getDetails();
         createDto.setCreator(1L);
         createDto.setCreateTime(new Date());
         createDto.setModifier(1L);
         createDto.setModifyTime(new Date());
+        //生成单据号
+        String code = codeProductUtil.getWhsInCode();
+        createDto.setWhsInCode(code);
         wmsInInfoMapper.insert(createDto);
         //添加明细单
         details.forEach( item ->{
@@ -71,7 +84,7 @@ public class WmsInService {
      * @return
      */
     @Transactional
-    public WmsInInfo updateInfo(WmsInInfoDto updateDto) {
+    public WmsInInfoDto updateInfo(WmsInInfoDto updateDto) {
         //先更新主单信息
         updateDto.setModifier(1L);
         updateDto.setModifyTime(new Date());
@@ -103,7 +116,9 @@ public class WmsInService {
         });
 
         //删除操作
-        wmsInDetailMapper.deleteBatchIds(removeList.stream().map(WmsInDetail::getId).collect(Collectors.toList()));
+        List<Long> delIdList = removeList.stream().map(WmsInDetail::getId).collect(Collectors.toList());
+        if (CollectionUtils.isNotEmpty(delIdList))
+            wmsInDetailMapper.deleteBatchIds(delIdList);
 
         //更新操作
         updateList.forEach(item ->{
