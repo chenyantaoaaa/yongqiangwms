@@ -29,6 +29,8 @@ public class WmsInInfo {
 
     private Integer clothWidth;
 
+    private String color;
+
     private Integer num;
 
     private String classes;
