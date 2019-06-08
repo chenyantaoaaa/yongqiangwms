@@ -67,7 +67,7 @@ public class CodeProductUtil {
 
         //自增
         String countVal = String.format("%06d",increase());
-        String dateStr = new SimpleDateFormat("yyyymmdd").format(new Date());
+        String dateStr = new SimpleDateFormat("yyyyMMdd").format(new Date());
         return prefix+dateStr+countVal;
     }
 
