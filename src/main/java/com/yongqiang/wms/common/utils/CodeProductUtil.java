@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 单号生成工具类 生成规则为RKYYYYMMDDXXXXXX
- * XXXXXX代表count 6位 从000001 => 999999 一天最多只能生成100W的单据号数据量
+ * XXXXXX代表count 3位 从001 => 999 一天最多只能生成100W的单据号数据量
  *
  * @author yang.shang
  * @create 2019-05-30 10:11
@@ -66,8 +66,8 @@ public class CodeProductUtil {
         }
 
         //自增
-        String countVal = String.format("%06d",increase());
-        String dateStr = new SimpleDateFormat("yyyymmdd").format(new Date());
+        String countVal = String.format("%03d",increase());
+        String dateStr = new SimpleDateFormat("yyyyMMdd").format(new Date());
         return prefix+dateStr+countVal;
     }
 
