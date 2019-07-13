@@ -5,7 +5,7 @@
     <!-- C:/Users/jun.li/.m2/repository C:/Documents and Settings/alan/.m2/repository/mysql/mysql-connector-java/5.1.9/mysql-connector-java-5.1.9.jar
         C:/Users/zhiqiang.ma/.m2/repository/com/zhaogang/jdbc/ojdbc14/10.2.0.4.0/ojdbc14-10.2.0.4.0.jar -->
 
-    <classPathEntry location="E:\work\apache-maven-3.3.9-bin\apache-maven-3.3.9\conf\rspo\mysql\mysql-connector-java\5.1.35\mysql-connector-java-5.1.35.jar"></classPathEntry>
+    <classPathEntry location="C:\Users\Hasee\.m2\repository\mysql\mysql-connector-java\5.1.22\mysql-connector-java-5.1.22.jar"></classPathEntry>
 
     <context id="context1">
         <commentGenerator>
@@ -14,9 +14,9 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://112.74.160.172:3306/yongqiang"
-                        userId="root"
-                        password="a86358201">
+                        connectionURL="jdbc:mysql://101.201.232.18:53306/sxh_sell"
+                        userId="sxh_sell_user"
+                        password="nAFHbchS">
         </jdbcConnection>
 
         <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer true，把JDBC DECIMAL 和
@@ -27,14 +27,14 @@
         <javaModelGenerator targetPackage="com.yongqiang.wms.model.stock"
                             targetProject="src/main/java"/>
         <!-- mapper接口存放目录 -->
-        <!--<sqlMapGenerator targetPackage="com.zhaogang.blm.mapper.templateFreight"-->
-                         <!--targetProject="src/main/resources"/>-->
-        <!--<javaClientGenerator targetPackage="com.zhaogang.blm.mapper.templateFreight"-->
-                             <!--targetProject="src/main/java" type="XMLMAPPER"/>-->
+        <sqlMapGenerator targetPackage="com.yongqiang.wms.mapper"
+                         targetProject="src/main/java"/>
+        <javaClientGenerator targetPackage="com.yongqiang.wms.mapper"
+                             targetProject="src/main/java" type="XMLMAPPER"/>
 
         <!-- 配置不生成Exmaple文件 -->
 
-        <table tableName="wms_in_detail"
+        <table tableName="admin_resource_relate"
       		   enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
