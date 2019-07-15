@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class ExcelHandler {
     public static final Integer wareHouseId = 442;
-
+    public static final String gysCode = "GYS1555648265062981";//系统经销虚拟供应商编码
 
     public static void main(String[] args) {
         Map<String,Map<String,Map<String,Object>>> sectionData = getSectionData();
@@ -84,8 +84,7 @@ public class ExcelHandler {
                 rowMap.put("仓库编码",wareHouseId);
                 rowMap.put("仓库名称","");
                 rowMap.put("商品编码",entry.getValue().get(BizConstants.TITLE_PRODUCT_NUM));
-                // TODO: 2019/7/12 待产品确认供应商相关问题
-                rowMap.put("供应商编码","");
+                rowMap.put("供应商编码",gysCode);
                 rowMap.put("销售模式",2);//2经销 1代销
                 rowMap.put("分仓",1);//全部正常仓
                 rowMap.put("商品名称","");
@@ -95,27 +94,40 @@ public class ExcelHandler {
             }else{//有代销
                 Map<String, Object> rowMapJing = new LinkedHashMap<>();
                 Map<String, Object> rowMapDai = new LinkedHashMap<>();
-                rowMapJing.put("仓库编码",wareHouseId);
-                rowMapJing.put("仓库名称","");
-                rowMapJing.put("商品编码",entry.getValue().get(BizConstants.TITLE_PRODUCT_NUM));
-                rowMapJing.put("供应商编码","");
-                rowMapJing.put("销售模式",2);//1经销 2代销
-                rowMapJing.put("分仓",1);//全部正常仓
-                rowMapJing.put("商品名称","");
-                rowMapJing.put("实际库存",(Long)entry.getValue().get(BizConstants.TITLE_PRODUCT_ACCOUNT) - (Long)entry.getValue().get("代销数"));
-                rowMapJing.put("单价",entry.getValue().get("成本价"));
+                if((Long)entry.getValue().get(BizConstants.TITLE_PRODUCT_ACCOUNT) - (Long)entry.getValue().get("代销数") > 0) {
+                    rowMapJing.put("仓库编码", wareHouseId);
+                    rowMapJing.put("仓库名称", "");
+                    rowMapJing.put("商品编码", entry.getValue().get(BizConstants.TITLE_PRODUCT_NUM));
+                    rowMapJing.put("供应商编码", gysCode);
+                    rowMapJing.put("销售模式", 2);//1经销 2代销
+                    rowMapJing.put("分仓", 1);//全部正常仓
+                    rowMapJing.put("商品名称", "");
+                    rowMapJing.put("实际库存", (Long) entry.getValue().get(BizConstants.TITLE_PRODUCT_ACCOUNT) - (Long) entry.getValue().get("代销数"));
+                    rowMapJing.put("单价", entry.getValue().get("成本价"));
 
-                rowMapDai.put("仓库编码",wareHouseId);
-                rowMapDai.put("仓库名称","");
-                rowMapDai.put("商品编码",entry.getValue().get(BizConstants.TITLE_PRODUCT_NUM));
-                rowMapDai.put("供应商编码","");
-                rowMapDai.put("销售模式",1);//2经销 1代销
-                rowMapDai.put("分仓",1);//全部正常仓
-                rowMapDai.put("商品名称","");
-                rowMapDai.put("实际库存",entry.getValue().get("代销数"));
-                rowMapDai.put("单价",entry.getValue().get("成本价"));
-                rows.add(rowMapJing);
-                rows.add(rowMapDai);
+                    rowMapDai.put("仓库编码", wareHouseId);
+                    rowMapDai.put("仓库名称", "");
+                    rowMapDai.put("商品编码", entry.getValue().get(BizConstants.TITLE_PRODUCT_NUM));
+                    rowMapDai.put("供应商编码", entry.getValue().get("代销供应商"));
+                    rowMapDai.put("销售模式", 1);//2经销 1代销
+                    rowMapDai.put("分仓", 1);//全部正常仓
+                    rowMapDai.put("商品名称", "");
+                    rowMapDai.put("实际库存", entry.getValue().get("代销数"));
+                    rowMapDai.put("单价", entry.getValue().get("成本价"));
+                    rows.add(rowMapJing);
+                    rows.add(rowMapDai);
+                }else{//如果系统中代销数量大于等于实际盘点数量 则只生成代销数据
+                    rowMapDai.put("仓库编码", wareHouseId);
+                    rowMapDai.put("仓库名称", "");
+                    rowMapDai.put("商品编码", entry.getValue().get(BizConstants.TITLE_PRODUCT_NUM));
+                    rowMapDai.put("供应商编码", entry.getValue().get("代销供应商"));
+                    rowMapDai.put("销售模式", 1);//2经销 1代销
+                    rowMapDai.put("分仓", 1);//全部正常仓
+                    rowMapDai.put("商品名称", "");
+                    rowMapDai.put("实际库存", entry.getValue().get(BizConstants.TITLE_PRODUCT_ACCOUNT));
+                    rowMapDai.put("单价", entry.getValue().get("成本价"));
+                    rows.add(rowMapDai);
+                }
             }
 
 
@@ -123,6 +135,7 @@ public class ExcelHandler {
         ExcelWriter writer = ExcelUtil.getWriter("d:/盘点导入结果.xlsx");
         writer.write(rows, true);
         writer.close();
+        System.out.println("导入excel已经生成 请在D盘查看");
     }
 
     /**
