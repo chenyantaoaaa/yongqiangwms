@@ -31,6 +31,7 @@ public class ExcelHandler {
         Map<String,Map<String,Object>> feeData = getFeeData();
 
         Map<String,Map<String,Object>> resultSectionData = new HashMap<>();
+        String errorMsg = "";
         //去重
         for (Map.Entry<String, Map<String,Map<String,Object>>> entry : sectionData.entrySet()) {
             for (Map.Entry<String,Map<String,Object>> entry1: entry.getValue().entrySet()) {
@@ -43,9 +44,11 @@ public class ExcelHandler {
                 }
             }
         }
-        String errorMsg = "";
         //系统sku对比
         for (Map.Entry<String, Map<String, Object>> entry : resultSectionData.entrySet()) {
+            if(entry.getValue().get(BizConstants.TITLE_PRODUCT_ACCOUNT) == null || StringUtils.isEmpty(entry.getValue().get(BizConstants.TITLE_PRODUCT_ACCOUNT).toString())){
+                errorMsg = errorMsg + entry.getKey() + ":该sku在盘点表格中实盘数量为空请重新检查\n";
+            }
             Map<String,Object> itemMap = entry.getValue();
             if(skuData.containsKey(entry.getKey())){
                 itemMap.put("系统SKU",skuData.get(entry.getKey()).get("SKU编码"));
@@ -58,6 +61,10 @@ public class ExcelHandler {
         for (Map.Entry<String, Map<String, Object>> entry : resultSectionData.entrySet()) {
             Map<String,Object> itemMap = entry.getValue();
             if(daiXiaoData.containsKey(entry.getKey())){
+                if(daiXiaoData.get(entry.getKey()).get("供应商编码") == null || StringUtils.isEmpty(daiXiaoData.get(entry.getKey()).get("供应商编码").toString())){
+                    errorMsg = errorMsg + entry.getKey() + ":该sku在表格中对应的代销供应商编码是空,请检查代销数量表格\n";
+                    continue;
+                }
                 itemMap.put("代销供应商",daiXiaoData.get(entry.getKey()).get("供应商编码"));
                 itemMap.put("代销数",daiXiaoData.get(entry.getKey()).get("代销数"));
             }
@@ -66,6 +73,10 @@ public class ExcelHandler {
         for (Map.Entry<String, Map<String, Object>> entry : resultSectionData.entrySet()) {
             Map<String,Object> itemMap = entry.getValue();
             if(feeData.containsKey(entry.getKey())){
+                if(feeData.get(entry.getKey()).get("成本价") == null || StringUtils.isEmpty(feeData.get(entry.getKey()).get("成本价").toString())){
+                    errorMsg = errorMsg + entry.getKey() + ":该sku在表格中对应的成本价格是空,请检查成本价格表格\n";
+                    continue;
+                }
                 itemMap.put("成本价",feeData.get(entry.getKey()).get("成本价"));
             }else{
                 errorMsg = errorMsg + entry.getKey() + ":该sku在系统中不存在成本价格请联系财务专员在系统中添加对应成本价格\n";
@@ -161,7 +172,12 @@ public class ExcelHandler {
             List<Map<String,Object>> readAll = reader.readAll();
             Map<String,Map<String,Object>> skuMap = new HashMap<>();
             readAll.forEach(b -> {
-                skuMap.put(b.get(BizConstants.TITLE_PRODUCT_NUM).toString(),b);
+                if(skuMap.containsKey(b.get(BizConstants.TITLE_PRODUCT_NUM).toString())){
+                    b.put(BizConstants.TITLE_PRODUCT_ACCOUNT,(Long)b.get(BizConstants.TITLE_PRODUCT_ACCOUNT) + (Long)skuMap.get(b.get(BizConstants.TITLE_PRODUCT_NUM).toString()).get(BizConstants.TITLE_PRODUCT_ACCOUNT));
+                    skuMap.put(b.get(BizConstants.TITLE_PRODUCT_NUM).toString(), b);
+                }else {
+                    skuMap.put(b.get(BizConstants.TITLE_PRODUCT_NUM).toString(), b);
+                }
             });
             sectionDataMap.put(a,skuMap);
         });
