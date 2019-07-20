@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -17,7 +18,7 @@ import java.util.*;
  * 用于盘点excel汇总操作
  */
 public class ExcelHandler {
-    public static final Integer wareHouseId = 442;
+    public static final Integer wareHouseId = 385;
     public static final String gysCode = "GYS1555648265062981";//系统经销虚拟供应商编码
 
     public static void main(String[] args) {
@@ -97,7 +98,7 @@ public class ExcelHandler {
                 rowMap.put("分仓",1);//全部正常仓
                 rowMap.put("商品名称","");
                 rowMap.put("实际库存",entry.getValue().get(BizConstants.TITLE_PRODUCT_ACCOUNT));
-                rowMap.put("单价",entry.getValue().get("成本价"));
+                rowMap.put("单价",BigDecimalFormat(entry.getValue().get("成本价")));
                 rows.add(rowMap);
             }else{//有代销
                 Map<String, Object> rowMapJing = new LinkedHashMap<>();
@@ -111,7 +112,7 @@ public class ExcelHandler {
                     rowMapJing.put("分仓", 1);//全部正常仓
                     rowMapJing.put("商品名称", "");
                     rowMapJing.put("实际库存", (Long) entry.getValue().get(BizConstants.TITLE_PRODUCT_ACCOUNT) - (Long) entry.getValue().get("代销数"));
-                    rowMapJing.put("单价", entry.getValue().get("成本价"));
+                    rowMapJing.put("单价", BigDecimalFormat(entry.getValue().get("成本价")));
 
                     rowMapDai.put("仓库编码", wareHouseId);
                     rowMapDai.put("仓库名称", "");
@@ -121,7 +122,7 @@ public class ExcelHandler {
                     rowMapDai.put("分仓", 1);//全部正常仓
                     rowMapDai.put("商品名称", "");
                     rowMapDai.put("实际库存", entry.getValue().get("代销数"));
-                    rowMapDai.put("单价", entry.getValue().get("成本价"));
+                    rowMapDai.put("单价", BigDecimalFormat(entry.getValue().get("成本价")));
                     rows.add(rowMapJing);
                     rows.add(rowMapDai);
                 }else{//如果系统中代销数量大于等于实际盘点数量 则只生成代销数据
@@ -133,7 +134,7 @@ public class ExcelHandler {
                     rowMapDai.put("分仓", 1);//全部正常仓
                     rowMapDai.put("商品名称", "");
                     rowMapDai.put("实际库存", entry.getValue().get(BizConstants.TITLE_PRODUCT_ACCOUNT));
-                    rowMapDai.put("单价", entry.getValue().get("成本价"));
+                    rowMapDai.put("单价", BigDecimalFormat(entry.getValue().get("成本价")) );
                     rows.add(rowMapDai);
                 }
             }
@@ -144,6 +145,13 @@ public class ExcelHandler {
         writer.write(rows, true);
         writer.close();
         System.out.println("导入excel已经生成 请在D盘查看");
+    }
+
+
+    //数据格式化s
+    private static BigDecimal BigDecimalFormat(Object obj){
+
+        return new BigDecimal(obj.toString().replace("\n","").replace("\t","").replace("\r","").replace("\\s","").trim());
     }
 
     /**
@@ -159,6 +167,8 @@ public class ExcelHandler {
             Workbook wb = WorkbookFactory.create(new FileInputStream(file));
             int sheetNum = wb.getNumberOfSheets();
             for (int i = 0; i < sheetNum; i++) {
+//            int k =20;
+//            for (int i = k; i < k+1; i++) {
                 sheetNames.add(wb.getSheetName(i));
             }
         } catch (Exception e) {
