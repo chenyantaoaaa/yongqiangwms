@@ -10,11 +10,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by yantao.chen on 2019-07-12
@@ -37,6 +33,7 @@ public class ExcelHandler {
             for (Map.Entry<String,Map<String,Object>> entry1: entry.getValue().entrySet()) {
                 if(resultSectionData.containsKey(entry1.getKey())){
                     Map<String,Object> itemMap = entry1.getValue();
+                    System.out.println(entry1.getKey()+"该条商品编码对应多条数据，实库数量正在进行累加");
                     itemMap.put(BizConstants.TITLE_PRODUCT_ACCOUNT,(Long)itemMap.get(BizConstants.TITLE_PRODUCT_ACCOUNT) + (Long)entry1.getValue().get(BizConstants.TITLE_PRODUCT_ACCOUNT));
                     resultSectionData.put(entry1.getKey(),itemMap);
                 }else{
